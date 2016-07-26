@@ -72,12 +72,14 @@ class SelectableGroup extends React.Component {
 	    const w = Math.abs(this._mouseDownData.initialW - e.pageX);
 	    const h = Math.abs(this._mouseDownData.initialH - e.pageY);
 
+	    const {top, left} = $(e.currentTarget).offset();
+
 	    this.setState({
 	    	isBoxSelecting: true,
 	    	boxWidth: w,
 	    	boxHeight: h,
-	    	boxLeft: Math.min(e.pageX, this._mouseDownData.initialW),
-	    	boxTop: Math.min(e.pageY, this._mouseDownData.initialH)
+	    	boxLeft: Math.min(e.pageX, this._mouseDownData.initialW) - left,
+			boxTop : Math.min(e.pageY, this._mouseDownData.initialH) -  top,
 	    });
 
 		if (this.props.selectOnMouseMove) this._throttledSelect();
