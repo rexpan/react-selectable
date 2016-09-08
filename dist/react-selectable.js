@@ -214,8 +214,13 @@ return /******/ (function(modules) { // webpackBootstrap
 		}, {
 			key: '_mouseDown',
 			value: function _mouseDown(e) {
-				// Disable if target is control by react-dnd
-				if (!!e.target.draggable) return;
+
+				if (isIgnore(e.target)) return;
+
+				function isIgnore(ele) {
+					return !!ele.draggable || // Disable if target is control by react-dnd
+					ele.className.includes("react-resizable-handle") || $(ele).closest("[draggable]").length > 0;
+				}
 
 				var node = _reactDom2.default.findDOMNode(this);
 				var collides = void 0,
