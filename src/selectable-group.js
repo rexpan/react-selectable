@@ -89,8 +89,16 @@ class SelectableGroup extends React.Component {
 	 * be added, and if so, attach event listeners
 	 */
 	_mouseDown (e) {
-		// Disable if target is control by react-dnd
-		if (!!e.target.draggable) return;
+
+		if (isIgnore(e.target)) return;
+
+		function isIgnore(ele) {
+			return (
+				!!ele.draggable || // Disable if target is control by react-dnd
+				ele.className.includes("react-resizable-handle") ||
+				($(ele).closest("[draggable]").length > 0)
+			);
+		}
 
 		const node = ReactDOM.findDOMNode(this);
 		let collides, offsetData, distanceData;
